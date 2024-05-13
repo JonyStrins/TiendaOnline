@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiendaOnline.Server", "TiendaOnline.Server\TiendaOnline.Server.csproj", "{7D65E2DF-920B-4127-99CD-073EB0CDBEC9}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "tiendaonline.client", "tiendaonline.client\tiendaonline.client.esproj", "{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D65E2DF-920B-4127-99CD-073EB0CDBEC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D65E2DF-920B-4127-99CD-073EB0CDBEC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D65E2DF-920B-4127-99CD-073EB0CDBEC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D65E2DF-920B-4127-99CD-073EB0CDBEC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89FF8F88-DD89-48F3-B0A3-2B8F268EC2CF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10419748-386F-410E-9FAA-838CA931DC1D}
+	EndGlobalSection
+EndGlobal
