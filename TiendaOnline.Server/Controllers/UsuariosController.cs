@@ -16,9 +16,30 @@ namespace TiendaOnline.Server.Controllers
         }
 
         [HttpGet]
+        [Route("getusers")]
         public IEnumerable<User> GetUsers()
         {
             return contexto.Users;
+        }
+
+        [HttpPost]
+        [Route("adduser")]
+        public async Task<IActionResult> AddUser([FromBody] User user)
+        {
+            await contexto.Users.AddAsync(user);
+            await contexto.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status200OK, "ok");
+        }
+
+        [HttpDelete]
+        [Route("deleteuser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            User user = contexto.Users.Find(id);
+
+            contexto.Users.Remove(user);
+            await contexto.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status200OK, "ok");
         }
     }
 }
