@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
 function App() {
@@ -80,14 +79,14 @@ function App() {
                     users.map(
                         (user) =>
                             <tr key={user.idusers}>
-                        <td>{user.name}</td>
-                        <td>{user.lastname}</td>
-                        <td>{user.email}</td>
-                        <td>{user.password}</td>
-                        <td>{user.address}</td>
-                        <td>{user.phone}</td>
+                                <td>{user.name}</td>
+                                <td>{user.lastname}</td>
+                                <td>{user.email}</td>
+                                <td>{user.password}</td>
+                                <td>{user.address}</td>
+                                <td>{user.phone}</td>
                                 <td><button type="button" className="btn btn-danger" onClick={() => eliminarUsuario(user.idusers) }>Eliminar</button></td>
-                    </tr>
+                            </tr>
                     )
                 }
             </tbody>

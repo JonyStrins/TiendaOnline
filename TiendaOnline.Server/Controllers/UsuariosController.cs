@@ -31,6 +31,15 @@ namespace TiendaOnline.Server.Controllers
             return StatusCode(StatusCodes.Status200OK, "ok");
         }
 
+        [HttpPut]
+        [Route("edituser")]
+        public async Task<IActionResult> EditUser([FromBody] User user)
+        {
+            contexto.Users.Update(user);
+            await contexto.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status200OK, "ok");
+        }
+
         [HttpDelete]
         [Route("deleteuser/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
