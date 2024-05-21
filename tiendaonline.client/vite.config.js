@@ -50,6 +50,10 @@ export default defineConfig({
             '^/productos': {
                 target,
                 secure: false
+            },
+            '^/categoria': {
+                target,
+                secure: false
             }
         },
         port: 5173,

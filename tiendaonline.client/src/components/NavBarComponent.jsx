@@ -20,10 +20,13 @@ function NavBarComponent() {
                             <Link className="nav-link" to="/wishlist">Categorias</Link>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
+                    <div className="d-flex">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <Link className="nav-link" aria-current="page" to="/perfil">Perfil</Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
