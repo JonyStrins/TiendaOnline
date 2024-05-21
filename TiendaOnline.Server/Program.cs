@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TiendaOnline.Server.Data;
+using TiendaOnline.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
