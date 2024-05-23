@@ -18,13 +18,16 @@ function NavBarComponent() {
                             <Link className="nav-link" to="/wishlist">Lista de Deseados</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/wishlist">Categorias</Link>
+                            <Link className="nav-link" to="/categorias">Categorias</Link>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
+                </div>
+                <div className="collapse navbar-collapse">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/perfil">Perfil</Link>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>

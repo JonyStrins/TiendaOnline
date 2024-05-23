@@ -54,6 +54,10 @@ export default defineConfig({
             '^/categoria': {
                 target,
                 secure: false
+            },
+            '^/upload': {
+                target,
+                secure: false
             }
         },
         port: 5173,

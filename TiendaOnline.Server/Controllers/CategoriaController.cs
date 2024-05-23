@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TiendaOnline.Server.Data;
 using TiendaOnline.Server.Models;
 
@@ -37,7 +38,6 @@ namespace TiendaOnline.Server.Controllers
 
             return StatusCode(StatusCodes.Status406NotAcceptable, "La Categoria ya Existe");
         }
-
 
     }
 }
