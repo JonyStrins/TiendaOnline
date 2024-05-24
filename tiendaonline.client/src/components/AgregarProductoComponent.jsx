@@ -9,6 +9,7 @@ function AgregarProductoComponent() {
     const [descripcion, setDescripcion] = useState()
     const [unitPrice, setUnitPrice] = useState()
     const [stock, setStock] = useState()
+    
     async function obtenerCategorias() {
         try {
             setCargando(false);
@@ -68,11 +69,11 @@ function AgregarProductoComponent() {
                 },
                 body: JSON.stringify({
                     name: nombre || "", // Asegura que name no sea null
-                    description: descripcion || null, // Si no hay descripción, envía null
-                    unitPrice: parseFloat(unitPrice), // Convierte el precio unitario a un número decimal
-                    stock: parseInt(stock), // Convierte el stock a un número entero
-                    idusers: 3, // Ajusta el ID del usuario según corresponda
-                    idcategories: parseInt(categoriaSeleccionada) // Convierte el ID de categoría a un número entero
+                    description: descripcion || null, // Si no hay descripciï¿½n, envï¿½a null
+                    unitPrice: parseFloat(unitPrice), // Convierte el precio unitario a un nï¿½mero decimal
+                    stock: parseInt(stock), // Convierte el stock a un nï¿½mero entero
+                    idusers: 3, // Ajusta el ID del usuario segï¿½n corresponda
+                    idcategories: parseInt(categoriaSeleccionada) // Convierte el ID de categorï¿½a a un nï¿½mero entero
                 })
             });
             if (response.ok) {

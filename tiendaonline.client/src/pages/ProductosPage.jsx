@@ -1,22 +1,46 @@
-function ProductosPage() {
+    import { useEffect } from "react";
+    import { useState } from "react";
 
-    return (
-        <div>
-            Productos Page
-            <div className="card" style={{width: '18rem'}}>
-                <img src="..." className="card-img-top" alt="..." />
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" className="btn btn-primary">Go somewhere</a>
+    function ProductosPage() {
+
+        const [files, setFiles] = useState([])
+        const [cargando, setCargando] = useState(false)
+
+        async function obtenerImagenes() {
+            try {
+                setCargando(false)
+                const response = await fetch('upload/getmultimedia');
+                const data = await response.json();
+                setFiles(data);
+                setCargando(true)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        useEffect(() => {
+            obtenerImagenes();
+        }, [])
+
+        return (
+            <div className="d-flex flex-wrap container">
+            {cargando ? 
+                files.map((img) => (
+                    <div key={img.fileName} className="card" style={{width: '18rem'}}>
+                        <img src={img.filePath} style={{width: 'auto', height: 150}} className="card-img-top" alt={img.fileName} />
+                        <div className="card-body">
+                            <h5 className="card-title">{img.fileName}</h5>
+                            <p className="card-text">File size: {img.fileSize} bytes</p>
+                            <a href={img.filePath} className="btn btn-primary">View File</a>
+                        </div>
                     </div>
-            </div>
-            {/*    <input classNameNameName="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />*/}
-            {/*    <button classNameNameName="btn btn-outline-success" type="submit">Buscar</button>*/}
-            {/*</form>*/}
+                ))
+                : 
+                <p>Loading...</p>
+            }
         </div>
-    );
+        );
 
-}
+    }
 
-export default ProductosPage;
+    export default ProductosPage;

@@ -35,10 +35,51 @@ namespace TiendaOnline.Server.Controllers
                 }
 
                 return Ok(file);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new { error = ex.Message, stackTrace = ex.StackTrace });
             }
         }
+
+        [HttpGet("getmultimedia")]
+        public IEnumerable<MultimediaFile> GetMultimedia()
+        {
+            var path = Path.Combine(_webHostEnvironment.ContentRootPath, "Uploads");
+
+            if (!Directory.Exists(path))
+            {
+                return Enumerable.Empty<MultimediaFile>();
+            }
+
+            var files = Directory.GetFiles(path);
+            var multimediaFiles = files.Select(file => new MultimediaFile
+            {
+                FileName = Path.GetFileName(file),
+                FilePath = Path.Combine("/uploads", Path.GetFileName(file)), // Cambia a la URL accesible desde el cliente
+                FileSize = new FileInfo(file).Length,
+                ContentType = GetContentType(file)
+            });
+
+            return multimediaFiles;
+        }
+
+        private string GetContentType(string path)
+        {
+            var provider = new Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(path, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
+        }
+    }
+
+    public class MultimediaFile
+    {
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+        public long FileSize { get; set; }
+        public string ContentType { get; set; }
     }
 }
