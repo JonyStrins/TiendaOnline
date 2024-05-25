@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function NavBarComponent() {
     return (
 
-        <nav className="navbar navbar-expand-lg bg-primary bg-opacity-50 border-bottom border-warning">
+        <nav className="navbar navbar-expand-lg bg-primary bg-opacity-50 border-3 border-bottom border-primary">
             <div className="container-fluid">
                 <Link className="navbar-brand fw-bold text-white p-3 bg-warning bg-opacity-50 border-warning border-2 border-top border-start rounded-end-pill" to="/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" className="bi bi-amazon" viewBox="0 0 16 16">
