@@ -1,6 +1,20 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function NavBarComponent() {
+
+    const [userExist, setUserExist] = useState(false)
+    const [wishlist, setWishList] = useState([])
+
+    useEffect(() => {
+        const storedItems = JSON.parse(localStorage.getItem('wishlist')) || [];
+        setWishList(storedItems);
+    }, [wishlist])
+
+    useEffect(() => {
+        setUserExist(localStorage.getItem('user') !== null);
+    }, [userExist])
+
     return (
 
         <nav className="navbar navbar-expand-lg bg-primary bg-opacity-50 border-3 border-bottom border-primary">
@@ -25,37 +39,44 @@ function NavBarComponent() {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gold" className="bi bi-bookmark-star-fill align-self-center" viewBox="0 0 16 16">
                                 <path fillRule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5M8.16 4.1a.178.178 0 0 0-.32 0l-.634 1.285a.18.18 0 0 1-.134.098l-1.42.206a.178.178 0 0 0-.098.303L6.58 6.993c.042.041.061.1.051.158L6.39 8.565a.178.178 0 0 0 .258.187l1.27-.668a.18.18 0 0 1 .165 0l1.27.668a.178.178 0 0 0 .257-.187L9.368 7.15a.18.18 0 0 1 .05-.158l1.028-1.001a.178.178 0 0 0-.098-.303l-1.42-.206a.18.18 0 0 1-.134-.098z" />
                             </svg>
-                            <Link className="nav-link text-warning" to="/wishlist">Lista de Deseados</Link>
-                        </li>
-                        <li className="nav-item dropdown d-flex align-items-end flex-column">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gold" className="bi bi-inboxes-fill align-self-center" viewBox="0 0 16 16">
-                                <path d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z" />
-                            </svg>
-                            <a className="nav-link dropdown-toggle text-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Categorias
-                            </a>
-                            <ul className="dropdown-menu bg-warning">
-                                <Link className="nav-link" to="/categorias">Pagina de categorias</Link>
-                                <li><a className="dropdown-item" href="#">Cosa</a></li>
-                                <li>
-                                    <hr className="dropdown-divider"></hr>
-                                </li>
-                                <li><a className="dropdown-item" href="#">Otra cosa</a></li>
-                            </ul>
+                            <Link className="nav-link text-warning position-relative" to="/wishlist">Lista de Deseados
+                                {
+                                    wishlist.length != 0
+                                        ?
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {wishlist.length}
+                                        </span>
+                                        :
+                                        <div></div>
+                                }
+                            </Link>
                         </li>
                     </ul>
                 </div>
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav ms-auto">
-                        <li className="nav-item">
-                            <Link className="nav-link text-primary bg-warning rounded-5 d-flex align-items-end flex-column" to="/perfil">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-person-circle align-self-center" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                    <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                                </svg>
-                                
-                                Mi Perfil</Link>
-                        </li>
+                        {
+                            userExist
+                                ?
+                                <li className="nav-item">
+                                    <Link className="nav-link text-primary bg-warning rounded-5 d-flex align-items-end flex-column" to="/perfil">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-person-circle align-self-center" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                            <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                        </svg>
+
+                                        Mi Perfil</Link>
+                                </li>
+                                :
+                                <div className="d-flex">
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-warning" to="/login">Iniciar Sesion</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-warning" to="/register">Registrarse</Link>
+                                    </li>
+                                </div>
+                        }
                     </ul>
                 </div>
             </div>

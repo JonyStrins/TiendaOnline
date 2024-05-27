@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 function AgregarProductoComponent() {
 
     const [file, setFile] = useState()
@@ -9,7 +10,12 @@ function AgregarProductoComponent() {
     const [descripcion, setDescripcion] = useState()
     const [unitPrice, setUnitPrice] = useState()
     const [stock, setStock] = useState()
-    
+    const [productos, setProductos] = useState([])
+    const [productosChange, setProductosChange] = useState(true)
+    const dataUser = JSON.parse(localStorage.getItem('user'));
+    const userID = dataUser.idusers;
+    const navigate = useNavigate();
+
     async function obtenerCategorias() {
         try {
             setCargando(false);
@@ -30,9 +36,23 @@ function AgregarProductoComponent() {
         obtenerCategorias()
     }, [categorias]);
 
+    useEffect(() => {
+        getProducts(userID)
+    }, [productosChange])
+
     const selectedHandleFiles = e => {
         setFile(e.target.files)
-        console.log(e.target.files)
+    }
+
+    async function getProducts(id) {
+        try {
+            const response = await fetch(`productos/getproductsid/${id}`);
+            const data = await response.json();
+            setProductos(data);
+            setProductosChange(false);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 
@@ -48,36 +68,36 @@ function AgregarProductoComponent() {
         formData.append('file', file[0]);
 
         try {
-            const response = await fetch("upload/subir", {
-                method: "POST",
-                body: formData,
-            });
-            if (response.ok) {
-                console.log('Archivos subidos con exito');
-            } else {
-                console.log('Error en la respuesta del servidor', response);
-            }
-        } catch (error) {
-            console.error('Error subiendo los archivos:', error);
-        }
-
-        try {
-            const response = await fetch("productos/addproduct", {
+            const responseProductos = await fetch("productos/addproduct", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    name: nombre || "", // Asegura que name no sea null
-                    description: descripcion || null, // Si no hay descripci�n, env�a null
-                    unitPrice: parseFloat(unitPrice), // Convierte el precio unitario a un n�mero decimal
-                    stock: parseInt(stock), // Convierte el stock a un n�mero entero
-                    idusers: 3, // Ajusta el ID del usuario seg�n corresponda
-                    idcategories: parseInt(categoriaSeleccionada) // Convierte el ID de categor�a a un n�mero entero
+                    name: nombre,
+                    description: descripcion,
+                    unitPrice: parseFloat(unitPrice),
+                    stock: parseInt(stock),
+                    fileroute: `/uploads/${file[0].name}`,
+                    idusers: userID,
+                    idcategories: parseInt(categoriaSeleccionada)
                 })
             });
-            if (response.ok) {
-                console.log('Producto Registrado');
+            if (responseProductos.ok) {
+                setProductosChange(false);
+                try {
+                    const responseUpload = await fetch("upload/subir", {
+                        method: "POST",
+                        body: formData,
+                    });
+                    if (responseUpload.ok) {
+                        navigate("/");
+                    } else {
+                        console.log('Error en la respuesta del servidor', response);
+                    }
+                } catch (error) {
+                    console.error('Error subiendo los archivos:', error);
+                }
             } else {
                 console.log('Error en la respuesta del servidor', response);
             }
@@ -109,7 +129,7 @@ function AgregarProductoComponent() {
                 </div>
                 <div className="input-group mb-3">
                     <input type="file" className="form-control" id="inputSubirArchivos" onChange={selectedHandleFiles} />
-                    <label className="input-group-text" htmlFor="inputSubirArchivos">Subir Imagene o Video</label>
+                    <label className="input-group-text" htmlFor="inputSubirArchivos">Subir Imagen</label>
                 </div>
                 <div className="input-group mb-3">
                     <label className="input-group-text" htmlFor="inputGroupSelect01">Categoria</label>

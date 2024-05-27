@@ -58,6 +58,10 @@ export default defineConfig({
             '^/upload': {
                 target,
                 secure: false
+            },
+            '^/multimedia': {
+                target,
+                secure: false
             }
         },
         port: 5173,

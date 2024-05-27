@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TiendaOnline.Server.Data;
 using TiendaOnline.Server.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TiendaOnline.Server.Controllers
 {
@@ -24,6 +24,15 @@ namespace TiendaOnline.Server.Controllers
             return contexto.Products;
         }
 
+        [HttpGet]
+        [Route("getproductsid/{id}")]
+        public IEnumerable<Product> GetProductsByUser(int id)
+        {
+            var products = contexto.Products.Where(p => p.Idusers == id).ToList();
+
+            return products;
+        }
+
         public class ProductRequestDto
         {
             public int Idproducts { get; set; }
@@ -31,6 +40,7 @@ namespace TiendaOnline.Server.Controllers
             public string? Description { get; set; }
             public decimal UnitPrice { get; set; }
             public int? Stock { get; set; }
+            public string fileroute { get; set; }
             public int Idusers { get; set; }
             public int Idcategories { get; set; }
         }
@@ -46,6 +56,7 @@ namespace TiendaOnline.Server.Controllers
                 Description = productDto.Description,
                 UnitPrice= productDto.UnitPrice,
                 Stock= productDto.Stock,
+                Fileroute = productDto.fileroute,
                 Idusers= productDto.Idusers,
                 Idcategories = productDto.Idcategories
             };
@@ -68,11 +79,22 @@ namespace TiendaOnline.Server.Controllers
         [Route("deleteproduct/{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            Product product = contexto.Products.Find(id);
+            // Encuentra el producto correspondiente al ID
+            var product = await contexto.Products.FirstOrDefaultAsync(p => p.Idproducts == id);
 
+            // Verifica si el producto existe
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Elimina el producto
             contexto.Products.Remove(product);
             await contexto.SaveChangesAsync();
+
             return StatusCode(StatusCodes.Status200OK, "ok");
         }
+
+
     }
 }

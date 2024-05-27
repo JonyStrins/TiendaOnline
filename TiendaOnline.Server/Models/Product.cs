@@ -14,6 +14,7 @@ public partial class Product
     public decimal UnitPrice { get; set; }
 
     public int? Stock { get; set; }
+    public string Fileroute { get; set; }
 
     public int Idusers { get; set; }
 

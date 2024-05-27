@@ -5,6 +5,9 @@ using TiendaOnline.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication("Bearer").AddJwtBearer();
+
 // Add services to the container.
 builder.Services.AddDbContext<TiendaOnlineContext>( options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("TiendaOnline"))

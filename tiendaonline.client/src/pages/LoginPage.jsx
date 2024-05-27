@@ -1,54 +1,64 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-//'C:\Users\Eduardo LJ\Desktop\Web II\TiendaOnline\TiendaOnline.Server\Controllers\UsuariosController.cs'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-    /*
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    
-    const saveSesion = async (e) => {
-        e.preventDefault()
+    const navigate = useNavigate();
 
-        const resoponse = await fetch("api/sesion/Guardar", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ email: email })
-        })
+    const handleSubmitButton = async (e) => {
+        e.preventDefault();
 
-        if (resoponse.ok) {
-            setEmail("");
+        try{
+            const response = await fetch(`usuarios/getuserbycredentials?email=${email}&password=${password}`,{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (response.ok){
+                const user = await response.json();
+                localStorage.setItem('user', JSON.stringify(user));
+                navigate("/");
+            }else{
+                alert("Correo o contrasenia incorrectos");
+            }
+        }catch (e) {
+            console.log(e);
         }
     }
-    */
 
     return (
         <div className="d-flex vh-100 justify-content-center align-items-center bg-primary" >
-            <div className="p-3 border border-primary rounded bg-white w-25 bg-opacity-50">
-                <form className="">
-                    <div className="mb-3">
-                        <label htmlFor="email">Correo electronico</label>
+            <div className="p-3 border border-primary rounded bg-white w-50 bg-opacity-50">
+                <div className="d-flex justify-content-center">
+                <h1>Iniciar Sesion</h1>
+                </div>
+                <form onSubmit={handleSubmitButton}>
+                    <div className="mb-3 input-group">
+                        <span className="input-group-text" htmlFor="email">Correo electronico</span>
                         <input
                             type="email"
                             placeholder="Ingresa tu correo electronico"
                             className="form-control"
-                            //value={email}
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         ></input>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password">Contrasenia</label>
+                    <div className="mb-3 input-group">
+                        <span className="input-group-text" htmlFor="password">Contrasenia</span>
                         <input
                             type="passsword"
                             placeholder="Introduce tu contrasenia"
                             className="form-control"
-                            //value={password}
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         ></input>
                     </div>
-                    <button type="submit" className="btn btn-success me-2">Inicia Sesion</button>
-                    <button type="button" className="btn btn-warning">Registrate</button>
+                    <div className="d-flex justify-content-around">
+                        <button type="submit" className="btn btn-success me-2">Inicia Sesion</button>
+                        <button type="button" className="btn btn-warning" onClick={() => navigate("/register")}>Registrate</button>
+                    </div>
                 </form>
             </div>
         </div>
